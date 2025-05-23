@@ -5,6 +5,7 @@ package auth
 
 import (
 	"errors"
+	"regexp"
 	"strings"
 )
 
@@ -29,5 +30,20 @@ func NewEmail(email string) (Email, error) {
 	return Email{value: trimmedEmail}, nil
 }
 
-// String retorna a representacao em string do email 
-func (e Email) STring()
+// String retorna a representacao em string do email
+func (e Email) String() string {
+	return e.value
+}
+
+// isValidEmail verifica se um email é valido
+func isValidEmail(email string) bool {
+	if email == "" {
+		return false
+	}
+
+	// expressão regular para validação de email
+	pattern := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
+	match, _ := regexp.MatchString(pattern, email)
+
+	return match
+}
